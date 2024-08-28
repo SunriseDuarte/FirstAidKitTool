@@ -1,0 +1,77 @@
+{% extends 'inventur/base.html' %}
+{% block body %}
+<h2 class="text-2xl m-10 font-bold"> </h2>
+<h2 class="inline text-2xl m-10 font-bold">Index List of Locations</h2><a href="{% url 'location' 0 %}?new" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Neu</a>
+<div class="container py-5 mx-10">
+    
+    <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+        <thead class="border-b border-neutral-200 font-medium dark:border-white/10"></thead>
+          <tr>
+            <th class="px-6 py-4">Location Name</th>
+            <th class="px-6 py-4">Box Size</th>
+            <th class="px-6 py-4">Description</th>
+            <th class="px-6 py-4">Ansicht</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for location in locations %}
+          <tr class="border-b border-neutral-200 dark:border-white/10">
+            <td class="whitespace-nowrap px-6 py-4">{{location.loc_name}}</td>
+            <td class="whitespace-nowrap px-6 py-4">{{location.boxtyp}}</td>
+            <td class="whitespace-nowrap px-6 py-4">{{location.loc_description}}</td>
+            <td class="whitespace-nowrap px-6 py-4"><a href="/location/{{location.id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">View</a></td>
+          </tr>
+          {% endfor %}
+          <tbody>
+      </table>
+
+      </div>
+      <h2 class="text-2xl m-10 font-bold"> </h2>
+      <h2 class="inline text-2xl m-10 font-bold">Index Boxtypen</h2>
+      <div class="container py-5 mx-10">
+          
+          <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+              <thead class="border-b border-neutral-200 font-medium dark:border-white/10"></thead>
+                <tr>
+                  <th class="px-6 py-4">Boxtyp Name</th>
+                  <th class="px-6 py-4">Beschreibung</th>
+                  <th class="px-6 py-4">Ansicht</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for boxtyp in boxtyps %}
+                <tr class="border-b border-neutral-200 dark:border-white/10">
+                  <td class="whitespace-nowrap px-6 py-4">{{boxtyp.typ_name}}</td>
+                  <td class="whitespace-nowrap px-6 py-4">{{boxtyp.typ_description}}</td>
+                  <td class="whitespace-nowrap px-6 py-4"><a href="/boxtyp/{{boxtyp.id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">View</a></td>
+                </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+      </div>
+     <h2 class="text-2xl m-10 font-bold"> </h2>
+      <h2 class="inline text-2xl m-10 font-bold">Index Boxitems</h2><a href="{% url 'item' '0' %}?new" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Neu</a>
+      <div class="container py-5 mx-10">
+          
+          <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+              <thead class="border-b border-neutral-200 font-medium dark:border-white/10"></thead>
+                <tr>
+                  <th class="px-6 py-4">Item Name</th>
+                  <th class="px-6 py-4">Anzahl</th>
+                  <th class="px-6 py-4">Ansicht</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for item in items %}
+                <tr class="border-b border-neutral-200 dark:border-white/10">
+                  <td class="whitespace-nowrap px-6 py-4">{{ item.item_name }}</td>
+                  <td class="whitespace-nowrap px-6 py-4">{{ item.item_amount }}</td>
+                  <td class="whitespace-nowrap px-6 py-4"><a href="/item/{{item.id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">View</a></td>
+                </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+</div>
+{% endblock %}
+
+

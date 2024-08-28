@@ -1,0 +1,62 @@
+{% extends 'inventur/base.html' %}
+{% block body %}
+<h2 class="text-2xl m-10 font-bold">Inventur {{ inventur.inv_name }} um {{ inventur.created_at }}</h2>
+<h2 class="text-2xl m-10 font-bold">by {{ inventur.created_by }} </h2>
+<div class="container py-5 mx-10">
+    
+    <table class="min-w-full text-left text-sm font-light text-surface dark:text-white">
+        <thead class="border-b border-neutral-200 font-medium dark:border-white/10"></thead>
+          <tr>
+            <th class="px-6 py-4">Beschreibung</th>
+            <th class="px-6 py-4">Soll Inhalt</th>
+            <th class="px-6 py-4">Ist Inhalt</th>
+            <th class="px-6 py-4">Kommentar</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for inventuritem in inventuritems %}
+          <tr name="invitem" class="border-b border-neutral-200 dark:border-white/10">
+            <td class="whitespace-nowrap px-6 py-4"><input type="hidden" name="inv_id" id="id_id" value="{{inventuritem.id}}">{{inventuritem.inv_name}}</td>
+            <td class="whitespace-nowrap px-6 py-4">{{inventuritem.item_amount_soll}}</td>
+            <td class="whitespace-nowrap px-6 py-4"><input class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10" type="text" name="item_amount_ist" id="id_item_amount_ist" value="{{inventuritem.item_amount_ist}}"></td>
+            <td class="whitespace-nowrap px-6 py-4"><input class="shadow text-gray-700 appearance-none border rounded py-2 px-3 mr-10" type="text" name="inv_comment" id="id_inv_comment" value="{{inventuritem.inv_comment}}"></td>
+          </tr>
+          {% endfor %}
+
+          <tbody>
+      </table>
+      <a id="btn_save" class="btn_save"><button class="text-white bg-green-500 px-5 py-2 my-5">Save</button></a>
+</div>
+
+<script type="text/javascript">
+  console.log('This is working -> Script loaded')
+  window.CSRF_TOKEN ="{{ csrf_token }}"
+
+  $(document).on('click','.btn_save',function(){
+    console.log('This is working -> Klick seen')
+
+    invitems = document.getElementsByName("invitem")
+    inv_ids = document.getElementsByName("inv_id")
+    item_amount_ists = document.getElementsByName("item_amount_ist")
+    inv_comments = document.getElementsByName("inv_comment")
+
+      for(var x=0; x < invitems.length; x++)   
+      {
+        //console.log("ID=", inv_ids[x].value, "; IST=", item_amount_ists[x].value, "; Comment=", inv_comments[x].value )
+        //invitems[x].value = "some value";
+      
+    
+      $.ajax({
+          method:"POST",
+          url:'/updateinvitem',
+          data:{inv_id:inv_ids[x].value,id_item_amount_ist:item_amount_ists[x].value,id_inv_comment:inv_comments[x].value,csrfmiddlewaretoken:window.CSRF_TOKEN}
+      })
+      }
+      window.location.replace("/")
+
+  })
+
+ </script>
+{% endblock %}
+
+

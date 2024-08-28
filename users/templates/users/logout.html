@@ -1,0 +1,9 @@
+{% extends 'inventur/base.html' %}
+{% block body %}
+<h1>You have been logged out</h1>
+<script>
+    setTimeout(function() {
+        window.location.href = 'http://127.0.0.1:8000/users/login/';
+    }, 1500);
+</script>
+{% endblock%}
